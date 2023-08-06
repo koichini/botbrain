@@ -2,9 +2,13 @@ package json
 
 import (
 	"encoding/json"
-	"fmt"
 	"log"
 	"os"
+)
+
+const (
+	DBDIR string = "db/"
+	FILENAME string = "album"
 )
 
 type Album struct {
@@ -14,17 +18,9 @@ type Album struct {
     Price  float64 `json:"price"`
 }
 
-func Create() {
-	fmt.Println("test")
-	// 書き込むデータ
-	album := []Album{
-		{ID: "1", Title: "Blue Train", Artist: "John Coltrane", Price: 56.99},
-		{ID: "2", Title: "Jeru", Artist: "Gerry Mulligan", Price: 17.99},
-		{ID: "3", Title: "Sarah Vaughan and Clifford Brown", Artist: "Sarah Vaughan", Price: 39.99},
-	}
-	
+func Create(albums []Album) {
 	// JSONファイルを新規作成(既に存在する場合は上書き)
-	file, err := os.Create("db/create.json")
+	file, err := os.Create(DBDIR + FILENAME + ".json")
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -33,28 +29,31 @@ func Create() {
 	// JSONファイルに書き込み
 	encoder := json.NewEncoder(file)
 	encoder.SetIndent("", "  ")
-	if err := encoder.Encode(album); err != nil {
+	if err := encoder.Encode(albums); err != nil {
 		log.Fatal(err)
 	}
-
-	fmt.Println("writted")
-
 }
 
-func Read() {
+func Read() (alubm []Album) {
 
-	file, err := os.Open("db/create.json")
+	file, err := os.Open(DBDIR + FILENAME +  ".json")
 	if err != nil {
 		log.Fatal(err)
 	}
 	defer file.Close()
 
-	var a []Album
 	decoder := json.NewDecoder(file)
-	if err := decoder.Decode(&a); err != nil {
+	if err := decoder.Decode(&alubm); err != nil {
 		log.Fatal(err)
 	}
 
-	log.Printf("%+v\n", a)
-	fmt.Println("readed")
+	log.Printf("%+v\n", alubm)
+	
+	return
+}
+
+func Update(album Album) {
+	albums := Read()
+	albums = append(albums, album)
+	Create(albums)
 }
