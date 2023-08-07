@@ -52,8 +52,17 @@ func Read() (alubm []Album) {
 	return
 }
 
+// Update処理は重複判定なし
+// DBに依存して処理できる想定
 func Update(album Album) {
+	var updateAlbums []Album
 	albums := Read()
-	albums = append(albums, album)
-	Create(albums)
+	// for i, a := range albums {
+	// 	fmt.Println(i, a)
+	// 	if a.ID == album.ID {
+	// 		updateAlbums = append()
+	// 	}
+	// }
+	updateAlbums = append(albums, album)
+	Create(updateAlbums)
 }

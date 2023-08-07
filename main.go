@@ -4,8 +4,6 @@ import (
 	"fmt"
 
 	"github.com/gin-gonic/gin"
-
-	"github.com/koichini/botbrain/json"
 )
 
 const (
@@ -13,13 +11,10 @@ const (
 )
 
 func main() {
-	albums := json.Read()
-    fmt.Println("==============")
-    fmt.Printf("%T\n", albums)
-    fmt.Println(albums)
-    fmt.Println("==============")
-	album := json.Album{ID: "4", Title: "Copper seas", Artist: "blue ocean", Price: 1.99}
-    json.Update(album)
+	// albums := json.Read()
+    // fmt.Printf("%T\n", albums)
+	// album := json.Album{ID: "4", Title: "Copper Copper seas", Artist: "blue ocean", Price: 1.99}
+    // json.Update(album)
 
 	router := gin.Default()
 	router.GET("/albums", getAlbums)
@@ -27,4 +22,5 @@ func main() {
 	router.POST("/albums", postAlbums)
 
 	router.Run("localhost:8080")
+    fmt.Println("======= main end =======")
 }
