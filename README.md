@@ -14,7 +14,7 @@
 
 ## Running
 
-```
+```bash
 go run .
 ```
 
@@ -23,6 +23,10 @@ go run .
 https://go.dev/doc/tutorial/web-service-gin
 
 ## Firestore credential Document
+
+```bash
+gcloud auth application-default login
+```
 
 https://cloud.google.com/docs/authentication/provide-credentials-adc?hl=ja#local-dev
 
